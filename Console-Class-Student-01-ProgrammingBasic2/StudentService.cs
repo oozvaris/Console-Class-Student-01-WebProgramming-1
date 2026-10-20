@@ -29,6 +29,31 @@ namespace Console_Class_Student_01_ProgrammingBasic2
             }
         }
 
+        public DAL.Models.Student RegisterStudent()
+        {
+            Console.WriteLine("Enter Student Name");
+            string name = Console.ReadLine();
+            Console.WriteLine("Enter Student SurName");
+            string surname = Console.ReadLine();
+            Console.WriteLine("Enter Student Email");
+            string email = Console.ReadLine();
+
+            return new DAL.Models.Student
+            {
+                StudentName = name,
+                StudentSurname = surname,
+                StudentEmail = email
+            };
+
+        }
+
+        public async Task AddStudentAsync(DAL.Models.Student student)
+        {
+            
+            int newStudentId = await _studentRepository.CreateAsync(student);
+            Console.WriteLine($"New student added with ID: {newStudentId}");
+        }
+
         public async Task DisplayStudentByIdAsync(int studentId)
         {
             var student = await _studentRepository.GetByIdAsync(studentId);

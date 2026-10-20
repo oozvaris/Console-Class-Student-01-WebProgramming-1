@@ -21,6 +21,29 @@ namespace DAL.Data
 
         }
 
+        public async Task<int> CreateAsync(Student student)
+        {
+            const string sql = """
+                INSERT INTO Student (StudentName, StudentSurname, StudentEmail)
+                VALUES (@StudentName, @StudentSurname, @StudentEmail);
+                SELECT SCOPE_IDENTITY();
+                """;
+
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@StudentName", student.StudentName);
+            command.Parameters.AddWithValue("@StudentSurname", student.StudentSurname);
+            command.Parameters.AddWithValue("@StudentEmail", student.StudentEmail);
+
+
+            await connection.OpenAsync();
+            var result = await command.ExecuteScalarAsync();
+
+            return Convert.ToInt32(result);
+
+        }
+
         public async Task<IReadOnlyList<Student>> GetAllAsync()
         { 
             var students = new List<Student>();

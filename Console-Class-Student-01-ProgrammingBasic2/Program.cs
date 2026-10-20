@@ -58,6 +58,8 @@ namespace Console_Class_Student_01_ProgrammingBasic2
                             break;
                         case 6:
                             // deploy student registration logic here
+                            DAL.Models.Student student = studentService.RegisterStudent();
+                            studentService.AddStudentAsync(student).Wait();
                             break;
                         case 7:
                             Console.Write("Enter Student ID to search: ");

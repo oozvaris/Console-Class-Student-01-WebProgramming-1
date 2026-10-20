@@ -15,5 +15,7 @@ namespace DAL.Data.Interfaces
 
         Task<Student?> GetByNameAsync(string StudentName);
 
+        Task<int> CreateAsync(Student student);
+
     }
 }
